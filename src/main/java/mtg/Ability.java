@@ -1,0 +1,4 @@
+package mtg;
+
+class Ability {
+}

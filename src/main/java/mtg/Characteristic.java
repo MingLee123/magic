@@ -1,0 +1,4 @@
+package mtg;
+
+interface Characteristic {
+}
