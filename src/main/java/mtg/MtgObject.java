@@ -6,29 +6,16 @@ import org.apache.commons.lang3.Validate;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MtgObject implements Controllable, Localizable {
-    private Collection<Collection<? extends Characteristic>> characteristics;
+public abstract class MtgObject implements Controllable, Localizable, Targetable {
+    private Collection<Collection<? extends Characteristic>> characteristics = new ArrayList<>();
     private Player controller;
     private Player owner;
     private Zone zone;
 
     MtgObject(Player controller, Player owner, Zone zone) {
-        Validate.notNull(owner);
-        Validate.notNull(zone);
-        characteristics = new ArrayList<>();
-        this.owner = owner;
-        this.zone = zone;
+        this.owner = Validate.notNull(owner);
+        this.zone = Validate.notNull(zone);
         this.controller = controller == null ? owner : controller;
-    }
-
-    @Override
-    public Zone getZone() {
-        return zone;
-    }
-
-    @Override
-    public void setZone(Zone zone) {
-        this.zone = zone;
     }
 
     private Collection<? extends Characteristic> getCharacteristic(Class<? extends Characteristic> characteristicClass) {
@@ -40,9 +27,31 @@ public class MtgObject implements Controllable, Localizable {
         return new ArrayList<>();
     }
 
-    private void setCharacteristic(Collection<? extends Characteristic> characteristic) {
-        characteristics.removeIf(c -> c.getClass().equals(characteristic.getClass()));
-        characteristics.add(characteristic);
+    @Override
+    public Player getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(Player controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public Player getOwner() {
+        return owner;
+    }
+
+    @Override
+    public Zone getZone() {
+        return zone;
+    }
+
+    @Override
+    public void setZone(Zone zone) {
+        this.zone.removeMtgObject(this);
+        this.zone = zone;
+        zone.addMtgObject(this);
     }
 
     boolean isColorless() {
@@ -61,18 +70,8 @@ public class MtgObject implements Controllable, Localizable {
         return getCharacteristic(Type.class).contains(type);
     }
 
-    @Override
-    public Player getOwner() {
-        return owner;
-    }
-
-    @Override
-    public Player getController() {
-        return controller;
-    }
-
-    @Override
-    public void setController(Player controller) {
-        this.controller = controller;
+    public void setCharacteristic(Collection<? extends Characteristic> characteristic) {
+        characteristics.removeIf(c -> c.getClass().equals(characteristic.getClass()));
+        characteristics.add(characteristic);
     }
 }

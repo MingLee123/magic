@@ -1,9 +1,12 @@
 package mtg;
 
-import mtg.zones.Zone;
+import mtg.zones.Stack;
 
-public class AbilityOnStack<A extends Ability> extends MtgObject implements Controllable {
-    public AbilityOnStack(Player controller, Player owner, Zone zone) {
-        super(controller, owner, zone);
+public class AbilityOnStack extends MtgObject implements Controllable {
+    Targetable target;
+
+    public AbilityOnStack(Player controller, Player owner, Stack stack, Targetable target) {
+        super(controller, owner, GameState.stack);
+        this.target = target;
     }
 }

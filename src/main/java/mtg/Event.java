@@ -1,4 +1,0 @@
-package mtg;
-
-class Event {
-}

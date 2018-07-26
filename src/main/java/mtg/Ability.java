@@ -1,4 +1,4 @@
 package mtg;
 
-class Ability {
+interface Ability {
 }

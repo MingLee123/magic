@@ -1,6 +1,6 @@
 package mtg;
 
-public enum Type implements Characteristic{
+public enum Type implements Characteristic {
     ARTIFACT(true, false),
     CREATURE(true, false),
     ENCHANTMENT(true, false),
@@ -9,7 +9,6 @@ public enum Type implements Characteristic{
     PLANESWALKER(true, false),
     SORCERY(false, true),
     TRIBAL(false, false);
-
     boolean isPermanentOnly;
     boolean isNonPermanentOnly;
 

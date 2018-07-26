@@ -1,8 +1,14 @@
 package mtg;
 
-import java.util.Collection;
+import mtg.events.Event;
 
-public class TriggeredAbility extends Ability {
-    private Collection<Event> conditions;
-    private Collection<Event> effects;
+import java.util.Collection;
+import java.util.function.Predicate;
+
+public interface TriggeredAbility extends Ability {
+    Collection<Event> getTriggeringEvents();
+
+    Collection<Predicate<GameState>> getPreconditions();
+
+    Collection<Event> getEffects();
 }
